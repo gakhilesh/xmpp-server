@@ -3,7 +3,7 @@ var logger = require('winston');
 
 // http://xmpp.org/extensions/xep-0160.html
 function format_log(client, message) {
-    return [client.socket.remoteAddress, client.streamId, message].join(" "); 
+    return client.streamId + " : " + message
 }
 
 function Logger() {
@@ -30,6 +30,7 @@ exports.configure = function(server, config) {
             });
 
             client.on('auth-failure', function(jid) {
+                console.log("auth-failure");
                 logger.info(format_log(client, "auth-failure " + jid));
             });
 
@@ -54,3 +55,4 @@ exports.configure = function(server, config) {
         })
     }
 }
+
